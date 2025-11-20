@@ -8,8 +8,8 @@ interface SearchBoxProps {
 export const SearchBox = ({ value, onChange }: SearchBoxProps) => {
   return (
     <input
-      className={css.input}
       type="text"
+      className={css.input}
       placeholder="Search notes"
       value={value}
       onChange={(e) => onChange(e.target.value)}
