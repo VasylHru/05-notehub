@@ -1,9 +1,8 @@
+
+import css from "./Loader.module.css";
+
 const Loader = () => {
-  return (
-    <p style={{ textAlign: "center", opacity: 0.7 }}>
-      Loading...
-    </p>
-  );
+  return <p className={css.loader}>Loading...</p>;
 };
 
 export default Loader;
