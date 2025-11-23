@@ -15,27 +15,26 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import css from "./App.module.css";
 
 const App = () => {
-
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
   const [debouncedSearch] = useDebounce(search, 500);
-
 
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["notes", page, debouncedSearch],
     queryFn: () => fetchNotes(page, debouncedSearch),
-    keepPreviousData: true,
+    placeholderData: (prev) => prev,
   });
 
   const createMutation = useMutation({
     mutationFn: createNote,
     onSuccess: () => {
-      queryClient.invalidateQueries(["notes"]);
+      queryClient.invalidateQueries({
+        queryKey: ["notes"],
+      });
       setIsModalOpen(false);
     },
   });
@@ -43,10 +42,11 @@ const App = () => {
   const deleteMutation = useMutation({
     mutationFn: deleteNote,
     onSuccess: () => {
-      queryClient.invalidateQueries(["notes"]);
+      queryClient.invalidateQueries({
+        queryKey: ["notes"],
+      });
     },
   });
-
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -59,7 +59,6 @@ const App = () => {
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
-
 
   return (
     <div className={css.app}>
