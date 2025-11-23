@@ -8,6 +8,12 @@ interface ModalProps {
 }
 
 export const Modal = ({ onClose, children }: ModalProps) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -21,13 +27,9 @@ export const Modal = ({ onClose, children }: ModalProps) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-
   return createPortal(
     <div className={css.backdrop} onClick={onClose}>
-      <div
-        className={css.modal}
-        onClick={(e) => e.stopPropagation()} 
-      >
+      <div className={css.modal} onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
     </div>,

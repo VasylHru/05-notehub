@@ -21,13 +21,10 @@ export interface CreateNoteParams {
 }
 
 export interface FetchNotesResponse {
-  page: number;
-  perPage: number;
-  totalPages: number;
-  totalNotes: number;
   notes: Note[];
+  totalPages: number;
+  
 }
-
 export interface DeleteNoteResponse {
   message: string;
   note: Note;
